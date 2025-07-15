@@ -1,0 +1,128 @@
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 3 to server version: 5.0.22-community-nt
+
+Type 'help;' or '\h' for help. Type '\c' to clear the buffer.
+
+mysql> create database codtech;
+Query OK, 1 row affected (0.02 sec)
+
+mysql> use codtech;
+Database changed
+
+mysql> create table employee(emp_id int, name varchar(20), dept_id int);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> desc employee;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| emp_id  | int(11)     | YES  |     | NULL    |       |
+| name    | varchar(20) | YES  |     | NULL    |       |
+| dept_id | int(11)     | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+3 rows in set (0.01 sec)
+
+mysql> insert into employee values(1,"Sai",10),(2,"Ram",20),(3,"Satish",30),(4,"John",40),(5,"John",NULL);
+Query OK, 5 rows affected (0.00 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> select * from employee;
++--------+--------+---------+
+| emp_id | name   | dept_it |
++--------+--------+---------+
+|      1 | Sai    |      10 |
+|      2 | Ram    |      20 |
+|      3 | Satish |      30 |
+|      4 | John   |      40 |
+|      5 | John   |    NULL |
++--------+--------+---------+
+5 rows in set (0.00 sec)
+
+mysql> create table department(dept_id int,dept_name varchar(20);
+Query OK, 1 rows affected (0.00 sec)
+
+mysql> desc department;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| dept_id   | int(11)     | YES  |     | NULL    |       |
+| dept_name | varchar(20) | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+2 rows in set (0.02 sec)
+
+mysql> insert into department values(10,"Developer");
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into department values(20,"Testing");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into department values(30,"HR");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into department values(60,"Engineering");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into department values(70,"Sales");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from department;
++---------+-------------+
+| dept_id | dept_name   |
++---------+-------------+
+|      10 | Developer   |
+|      20 | Testing     |
+|      30 | HR          |
+|      60 | Engineering |
+|      70 | Sales       |
++---------+-------------+
+5 rows in set (0.00 sec)
+
+mysql> select e.name,d.dept_name from employee e INNER JOIN department d ON e.dept_id=d.dept_id;
++--------+-----------+
+| name   | dept_name |
++--------+-----------+
+| Sai    | Developer |
+| Ram    | Testing   |
+| Satish | HR        |
++--------+-----------+
+3 rows in set (0.00 sec)
+
+mysql> select e.name,d.dept_name from employee e LEFT JOIN department d ON e.dept_id=d.dept_id;
++--------+-----------+
+| name   | dept_name |
++--------+-----------+
+| Sai    | Developer |
+| Ram    | Testing   |
+| Satish | HR        |
+| John   | NULL      |
+| John   | NULL      |
++--------+-----------+
+5 rows in set (0.00 sec)
+
+mysql> select e.name,d.dept_name from employee e RIGHT JOIN department d ON e.dept_id=d.dept_id;
++--------+-------------+
+| name   | dept_name   |
++--------+-------------+
+| Sai    | Developer   |
+| Ram    | Testing     |
+| Satish | HR          |
+| NULL   | Engineering |
+| NULL   | Sales       |
++--------+-------------+
+5 rows in set (0.00 sec)
+
+mysql> select e.name,d.dept_name from employee e LEFT JOIN department d ON e.dept_id=d.dept_id UNION select e.name,d.dept_name from employee e RIGHT JOIN department d ON e.dept_id=d.dept_id;
++--------+-------------+
+| name   | dept_name   |
++--------+-------------+
+| Sai    | Developer   |
+| Ram    | Testing     |
+| Satish | HR          |
+| John   | NULL        |
+| NULL   | Engineering |
+| NULL   | Sales       |
++--------+-------------+
+6 rows in set (0.01 sec)
+
+mysql>
